@@ -15,4 +15,6 @@ WORKDIR /code
 # Copy project code.
 COPY . /code/
 
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]
+
 EXPOSE 80

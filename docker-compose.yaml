@@ -4,14 +4,14 @@ services:
   db:
     image: postgres
     container_name: db
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - .env
   dj:
     container_name: dj
     build: django
-    command: python manage.py runserver 0.0.0.0:80
+    #command: python manage.py runserver 0.0.0.0:80
+    env_file:
+      - .env
     volumes:
       - ./django:/code
     ports:
