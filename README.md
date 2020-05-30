@@ -44,6 +44,7 @@
 * Working Log in and Sign Up`
 * `.env` is put in `.gitignore` as in next sections will contain sensitive data
 
-
+## Password reset 
+* Working password reset including sending e-mail with token and subsequent password change
 
 
