@@ -37,5 +37,13 @@
 * Start with `docker-compose up -V --build` and visit `http://localhost/finhub/`
 * Stop with Ctr + C
 
+## Templates - used supporting materials:
+* Download from `https://getbootstrap.com/docs/4.5/examples/`
+* Some templates from `https://github.com/nauvalazhar/bootstrap-4-login-page`
+* Created welcome page, Finhub page after login, top menu with search, left menu after login
+* Working Log in and Sign Up`
+* `.env` is put in `.gitignore` as in next sections will contain sensitive data
+
+
 
 

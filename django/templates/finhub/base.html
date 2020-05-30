@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Nedialko Mihailov">
+    <title>{% block title %}Base template{% endblock title %}</title>
+    <link href="{% static 'dist/css/bootstrap.css'%}" rel="stylesheet">
+    <link href="{% static 'finhub/dashboard.css'%}" rel="stylesheet">
+    {% block custom_css %} {% endblock custom_css %}
+  </head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+      <!-- Top menu with search and sign in & log in/sign out -->
+      <a class="navbar-brand col-md-3 col-lg-2 w-100 mr-0 px-3" href="{% url 'base' %}">Finance Hub</a>
+      <!-- Right buton when minimized -->
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
+            data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Search field & Button -->
+      <form class="form-search w-100" method="post" action="{% url 'search'%}">
+        {% csrf_token %}
+        <div class="input-group">
+          <input type="text" class="form-control form-control-dark " id="search" name="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-dark btn-1 btn-primary btn-block" type="submit" value="go">Go</button>
+          </div>
+        </div>
+      </form>
+      <!-- Login/Signin or Signout -->
+      {% if user.is_authenticated %}
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
+          </li>
+        </ul>
+      {% else %}
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="{% url 'login'%}">Log in</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="{% url 'signup'%}">Sign up</a>
+          </li>
+        </ul>
+      {% endif %}
+    </nav>
+    <!-- Import left menu -->
+    {% if user.is_authenticated %}
+          {% include "finhub/left_menu_active.html" %}
+    {% endif %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      {% block content %}
+      <!-- Main content -->
+      {% endblock %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write("<script src='{% static "assets/js/vendor/jquery-slim.min.js"%}'><\/script>")</script><script src="{% static 'dist/js/bootstrap.bundle.js'%}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="{% static 'finhub/dashboard.js'%}"></script></body>
+    {% block custom_js %} {% endblock custom_js %}
+</html>

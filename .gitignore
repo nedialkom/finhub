@@ -1,0 +1,7 @@
+# Default ignored files
+/.idea
+/.env
+/Finhub.ipynb
+/fx.p
+/quotes.csv
+/stocks.p
