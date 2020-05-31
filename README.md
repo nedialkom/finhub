@@ -47,4 +47,6 @@
 ## Password reset 
 * Working password reset including sending e-mail with token and subsequent password change
 
+## Menu
+* Left menu enabled but different when user is logged in or not
 

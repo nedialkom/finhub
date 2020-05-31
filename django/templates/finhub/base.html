@@ -11,48 +11,13 @@
     {% block custom_css %} {% endblock custom_css %}
   </head>
   <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <!-- Top menu with search and sign in & log in/sign out -->
-      <a class="navbar-brand col-md-3 col-lg-2 w-100 mr-0 px-3" href="{% url 'base' %}">Finance Hub</a>
-      <!-- Right buton when minimized -->
-      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
-            data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Search field & Button -->
-      <form class="form-search w-100" method="post" action="{% url 'search'%}">
-        {% csrf_token %}
-        <div class="input-group">
-          <input type="text" class="form-control form-control-dark " id="search" name="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-dark btn-1 btn-primary btn-block" type="submit" value="go">Go</button>
-          </div>
-        </div>
-      </form>
-      <!-- Login/Signin or Signout -->
-      {% if user.is_authenticated %}
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
-          </li>
-        </ul>
-      {% else %}
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <a class="nav-link" href="{% url 'login'%}">Log in</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <a class="nav-link" href="{% url 'signup'%}">Sign up</a>
-          </li>
-        </ul>
-      {% endif %}
-    </nav>
+    <!-- import top navigation line -->
+    {% include "finhub/top_navigation.html" %}
     <!-- Import left menu -->
     {% if user.is_authenticated %}
           {% include "finhub/left_menu_active.html" %}
+    {% else %}
+      {% include 'finhub/left_menu_inactive.html'%}
     {% endif %}
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       {% block content %}
