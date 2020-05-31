@@ -46,7 +46,14 @@
 
 ## Password reset 
 * Working password reset including sending e-mail with token and subsequent password change
+* `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD` and `EMAIL_HOST_USER` for gmail.com saved in `.env`
 
 ## Menu
 * Left menu enabled but different when user is logged in or not
 
+## Stock exchanges
+* working menu stock exchanges which list all stock exchanges
+* Load companies - delete all companies in DB and update the via API `https://finnhub.io/api/v1`
+* After clicking to certain stock -> goes to page with all companies listed on this stock
+* Button `Update` uses the API to update the list of companies on this stock
+* Register in `https://finnhub.io/` and obtain API_KEY. Save it in `.env` under `FINNHUB_API_KEY` key

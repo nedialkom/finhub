@@ -2,6 +2,10 @@ Django
 psycopg2
 gunicorn
 pyopenssl
+pandas
+xlrd
+requests
+
 
 
 
