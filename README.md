@@ -57,3 +57,9 @@
 * After clicking to certain stock -> goes to page with all companies listed on this stock
 * Button `Update` uses the API to update the list of companies on this stock
 * Register in `https://finnhub.io/` and obtain API_KEY. Save it in `.env` under `FINNHUB_API_KEY` key
+
+
+## Elastcisearch + API for search
+* updated `docker-compose.yaml`
+* created `djangorestframework` API `/api/v1/company/?q=` for search
+

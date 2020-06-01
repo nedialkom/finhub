@@ -3,11 +3,14 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
+from finhub.api.views import CompanyList
+
 from . import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/company/', CompanyList.as_view()),
     path('finhub/', include('finhub.urls')),
     path('', views.base, name='base'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
@@ -33,5 +36,3 @@ urlpatterns = [
             ),
           name='password_reset_complete'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-

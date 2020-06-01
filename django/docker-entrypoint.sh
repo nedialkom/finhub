@@ -25,6 +25,31 @@ else:
 "
 printf "$script" | python manage.py shell
 
+echo "Starting Elasticsearch indexing ..."
+script2="
+import elasticsearch
+import time
+es = elasticsearch.Elasticsearch([{'host': 'elasticsearch', 'port': 9200}])
+while True:
+    try:
+        es.search(index='')
+        break
+    except (
+        elasticsearch.exceptions.ConnectionError,
+        elasticsearch.exceptions.TransportError
+    ):
+        time.sleep(1)
+"
+
+printf "$script2" | python manage.py shell
+
+set -o errexit
+#set -o pipefail
+set -o nounset
+
+#index data from the relational database into Elasticsearch
+python manage.py search_index --rebuild -f
+
 # Start server
 # Development with python, production with gunicorn
 echo "Starting server"

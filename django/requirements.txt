@@ -5,7 +5,7 @@ pyopenssl
 pandas
 xlrd
 requests
-
-
-
-
+django-elasticsearch-dsl
+djangorestframework
+pyexcel
+pyexcel-io

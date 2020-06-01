@@ -1,11 +1,27 @@
 version: "3"
 
+volumes:
+  pgdata: {}
+  esdata: {}
+
 services:
   db:
     image: postgres
     container_name: db
     env_file:
       - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
   dj:
     container_name: dj
     build: django
@@ -18,3 +34,4 @@ services:
       - "80:80"
     depends_on:
       - db
+      - elasticsearch
