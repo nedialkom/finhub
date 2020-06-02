@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Collect static files
 echo "Collect static files"
@@ -25,11 +25,11 @@ else:
 "
 printf "$script" | python manage.py shell
 
-echo "Starting Elasticsearch indexing ..."
+echo "Waiting Elasticsearch to start ..."
 script2="
 import elasticsearch
 import time
-es = elasticsearch.Elasticsearch([{'host': 'elasticsearch', 'port': 9200}])
+es = elasticsearch.Elasticsearch([{'host': 'es', 'port': 9200}])
 while True:
     try:
         es.search(index='')
@@ -48,6 +48,7 @@ set -o errexit
 set -o nounset
 
 #index data from the relational database into Elasticsearch
+echo "Starting Elasticsearch indexing ..."
 python manage.py search_index --rebuild -f
 
 # Start server

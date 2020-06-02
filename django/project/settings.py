@@ -131,7 +131,7 @@ FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'elasticsearch:9200'
+        'hosts': 'es:9200'
     },
 }
 

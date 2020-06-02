@@ -63,3 +63,4 @@
 * updated `docker-compose.yaml`
 * created `djangorestframework` API `/api/v1/company/?q=` for search
 
+## Refactoring `docker-compose` and django `Dockerfile` including `start.sh`

@@ -15,6 +15,8 @@ WORKDIR /code
 # Copy project code.
 COPY . /code/
 
-ENTRYPOINT ["sh", "docker-entrypoint.sh"]
+COPY start.sh /start.sh
+RUN sed -i 's/\\r//' /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 80

@@ -13,8 +13,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  elasticsearch:
+  es:
     image: elasticsearch:7.7.0
+    container_name: es
     volumes:
       - esdata:/usr/share/elasticsearch/data
     environment:
@@ -25,7 +26,6 @@ services:
   dj:
     container_name: dj
     build: django
-    #command: python manage.py runserver 0.0.0.0:80
     env_file:
       - .env
     volumes:
@@ -34,4 +34,6 @@ services:
       - "80:80"
     depends_on:
       - db
-      - elasticsearch
+      - es
+    command: /start.sh
+    #command: python manage.py runserver 0.0.0.0:80
