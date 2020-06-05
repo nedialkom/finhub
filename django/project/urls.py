@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
-from finhub.api.views import CompanyList
+from finhub.api.views import CompanyList, CompanyListJson
 
 from . import views
 
@@ -11,7 +11,9 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/company/', CompanyList.as_view()),
+    path('api/v2/company/', CompanyListJson.as_view()),
     path('finhub/', include('finhub.urls')),
+    path('company_details/<int:id>/', views.company_details, name='company_details'),
     path('', views.base, name='base'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('login/', views.login, name='login'),

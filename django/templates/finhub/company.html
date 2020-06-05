@@ -1,0 +1,54 @@
+{% extends 'finhub/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ text }}</h1>
+      </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <tbody>
+                    <tr>
+                        <td><img src={{response.logo}} alt="logo" height="100"></td>
+                    </tr>
+                    <tr>
+                       <td><h2 class="align-middle">{{response.name}}</h2></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <tbody>
+            <tr><td>Industry</td><td>{{response.finnhubIndustry}}</td></tr>
+            <tr><td>IPO Date</td><td>{{response.ipo}}</td></tr>
+            <tr><td>Outstanding shares</td><td>{{response.shareOutstanding}}</td></tr>
+            <tr><td>Market capitalisation</td><td>{{response.marketCapitalization}}</td></tr>
+            <tr><td>Country</td><td>{{response.country}}</td></tr>
+            <tr><td>Ticker</td><td>{{response.ticker}}</td></tr>
+            <tr><td>Stock exchange</td><td>{{response.exchange}}</td></tr>
+            <tr><td>Currency</td><td>{{response.currency}}</td></tr>
+            <tr><td>Phone</td><td>{{response.phone}}</td></tr>
+            <tr><td>Web site</td><td><a href={{response.weburl}}>{{response.weburl}}</a></td></tr>
+          </tbody>
+        </table>
+        <h3>News from last 3 days</h3>
+        <table>
+            <tbody>
+            {% for new in news %}
+            <tr>
+                <td><img src={{new.image}} alt="logo" height="100" width="200"></td>
+                <td>
+                    <h6><a href = {{new.url}}> {{new.headline}}</a></h6>
+                    <p>{{new.summary}}</p>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+          {{news}}
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+{% endblock custom_js %}

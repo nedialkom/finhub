@@ -1,10 +1,15 @@
-from django_elasticsearch_dsl import Document
+from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from .models import Company
+from .models import Company, Exchange
 
 
 @registry.register_document
 class CompanyDocument(Document):
+    exchange = fields.ObjectField(properties={
+        'code': fields.TextField(),
+        'currency': fields.TextField(),
+        'name': fields.TextField(),
+    })
     class Index:
         # Name of the Elasticsearch index
         name = 'company'
@@ -20,7 +25,9 @@ class CompanyDocument(Document):
             'description',
             'displaySymbol',
             'symbol',
+            'id',
         ]
+        related_models = [Exchange]
 
         # Ignore auto updating of Elasticsearch when a model is saved
         # or deleted:
@@ -32,3 +39,9 @@ class CompanyDocument(Document):
         # Paginate the django queryset used to populate the index with the specified size
         # (by default it uses the database driver's default setting)
         # queryset_pagination = 5000
+
+    def get_queryset(self):
+        """Not mandatory but to improve performance we can select related in one sql request"""
+        return super(CompanyDocument, self).get_queryset().select_related(
+            'exchange'
+        )

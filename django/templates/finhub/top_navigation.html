@@ -10,7 +10,7 @@
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <form class="form-search w-100" method="post" action="{% url 'search'%}">
+      <form class="form-search w-100" method="post" id="searchForm" action="{% url 'search'%}">
         {% csrf_token %}
         <div class="input-group">
           <input type="text" class="form-control form-control-dark " id="search" name="search" placeholder="Search" aria-label="Search">

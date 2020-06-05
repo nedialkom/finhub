@@ -3,10 +3,17 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.conf import settings
 
+from finhub.search import search as search_api_call
+from finhub.models import Company
+
+import requests
+import datetime
+
+from . import settings
+
+API_KEY = settings.FINNHUB_API_KEY
+END_POINT = 'https://finnhub.io/api/v1'
 
 def base(request):
     if request.method == 'GET':
@@ -75,8 +82,21 @@ def search(request):
             return HttpResponseRedirect(reverse('base'))
         """Add your search code here"""
         # Do search and return the answer to the template
+        elastic_results = search_api_call(search_filed)
         text = 'Search result for {}:'.format(search_filed)
-        search_result = 'This is your result'
-        return render(request, 'finhub/search.html', {'text':text, 'search_result':search_result})
+
+        return render(request, 'finhub/search.html', {'text':text, 'companies':elastic_results})
     else:
         return HttpResponseRedirect(reverse('base'))
+
+def company_details(request, id):
+    company = Company.objects.get(id=id)
+    url = END_POINT + '/stock/profile2?symbol=' + company.symbol + "&token=" + API_KEY
+    r = requests.get(url)
+    to_date = datetime.datetime.now()
+    from_date = to_date - datetime.timedelta(days=3)
+    to_date = to_date.strftime('%Y-%m-%d')
+    from_date = from_date.strftime('%Y-%m-%d')
+    url = END_POINT + '/company-news?symbol=' + company.symbol + '&from=' + from_date + '&to=' + to_date + "&token=" + API_KEY
+    r2 = requests.get(url)
+    return render(request, 'finhub/company.html', {'company':company, 'response':r.json(), 'news':r2.json(), 'eday':to_date, 'bday':from_date})

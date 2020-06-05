@@ -7,4 +7,6 @@ class CompanySerializer(serializers.ModelSerializer):
             'description',
             'displaySymbol',
             'symbol',
+            'exchange',
+            'id'
         )

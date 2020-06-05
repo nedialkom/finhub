@@ -40,21 +40,42 @@
           var i;
           var out;
           var arr=[];
-
+          var uniqueArr = [];
           $('#search').keyup(function(){
               var value=$(this).val();
 
               $.ajax({
+                  /* api v1*/
                   url:"http://localhost/api/v1/company/?q="+value,
+                  /*api v2*/
+                  /*url:"http://localhost/api/v2/company/?q="+value,*/
                   dataType: "json",
                   crossDomain: true,
                   success: function (parsed_json) {
+                      /* api v1 */
                       var c =$.each(parsed_json.results,function(i,item){
+                      /* api v2 */
+                      /*var c =$.each(parsed_json.hits.hits,function(i,item){*/
+                          /* api v1 */
                           out=(parsed_json.results[i].description);
+                          /* api v 2 */
+                          /*out=(parsed_json.hits.hits[i]._source.description);*/
                           arr.push(out);
+
+                          $.each(arr, function(i, el){
+                              if($.inArray(el, uniqueArr) === -1) uniqueArr.push(el);
+                          });
                       });
                       $( "#search" ).autocomplete({
-                          source:arr
+                          source:uniqueArr,
+                          select: function( event, ui ) {
+                              var label = ui.item.label;
+                              var value = ui.item.value;
+                              //store in session
+                              document.valueSelectedForAutocomplete = value;
+                              $("#search").val(ui.item.label);
+                              $("#searchForm").submit();
+                          }
                       });
                   },
                   error: function (xhr, ajaxOptions, thrownError) {
