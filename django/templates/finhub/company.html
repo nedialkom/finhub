@@ -1,5 +1,6 @@
 {% extends 'finhub/base.html' %}
 {% load static %}
+{% load timetags %}
 {% block content %}
     <div class="container-fluid">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -32,13 +33,41 @@
             <tr><td>Web site</td><td><a href={{response.weburl}}>{{response.weburl}}</a></td></tr>
           </tbody>
         </table>
-        <h3>News from last 3 days</h3>
+      </div>
+    <div class="row align-items-start">
+        <div class="col-auto">
+            <h3>News for the period</h3>
+        </div>
+        <div class="col-auto">
+            <div class="row form-group">
+                  <div class="">
+                    <input type="date" name="bday" id = "bday" value="{{bday}}" class="form-control">
+                  </div>
+            </div>
+        </div>
+        <div class="col-auto">
+            -
+        </div>
+        <div class="col-auto">
+          <div class="row form-group">
+
+             <div class="">
+                <input type="date" name="eday" id = "eday" value="{{eday}}" class="form-control">
+             </div>
+          </div>
+        </div>
+        <div class="col-auto">
+            <button id="update_btn" class="btn btn-primary btn-dark">Update</button>
+        </div>
+    </div>
+        <div id="news">
         <table>
             <tbody>
             {% for new in news %}
             <tr>
                 <td><img src={{new.image}} alt="logo" height="100" width="200"></td>
                 <td>
+                    <p><small>{{new.datetime|print_timestamp}}</small></p>
                     <h6><a href = {{new.url}}> {{new.headline}}</a></h6>
                     <p>{{new.summary}}</p>
                 </td>
@@ -46,9 +75,44 @@
             {% endfor %}
             </tbody>
         </table>
-          {{news}}
+        </div>
     </div>
 {% endblock %}
 
 {% block custom_js %}
+        <script>
+            $("#update_btn").click(function(){
+                var url = "{{url}}" + "&from=" + document.getElementById("bday").value + "&to=" + document.getElementById("eday").value;
+                var data = [];
+                $.ajax({
+                    url:url,
+                    dataType: "json",
+                    crossDomain: true,
+                    success: function (parsed_json) {
+                        var c =$.each(parsed_json,function(i,item){
+                            var headline = item.headline;
+                            var image = item.image;
+                            var urlHeadline = item.url;
+                            var summary = item.summary;
+                            var datetime = new Date(item.datetime*1000).toLocaleString();
+                            var row = {headline:headline, image:image, url:urlHeadline, summary:summary, datetime:datetime};
+                            data.push(row);
+                        });
+                        var rows = '';
+                        $.each(data, function(index, item) {
+                            var row = '<tr>';
+                            row += '<td><img src=' + item['image']+' alt="logo" height="100" width="200"></td>';
+                            row += '<td><p><small>'+item['datetime']+'</small></p>'+'<h6><a href = ' + item['url'] + '>' + item['headline'] + '</a></h6><p>' + item['summary'] + '</p></td>';
+                            rows += row + '<tr>';
+                        });
+                        var table = '<table><tbody>'+rows+'</tbody></table>';
+                        document.getElementById("news").innerHTML = table;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                      alert(xhr.status);
+                      alert(thrownError);
+                    }
+                });
+            });
+        </script>
 {% endblock custom_js %}

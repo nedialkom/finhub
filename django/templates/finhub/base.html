@@ -43,7 +43,6 @@
           var uniqueArr = [];
           $('#search').keyup(function(){
               var value=$(this).val();
-
               $.ajax({
                   /* api v1*/
                   url:"http://localhost/api/v1/company/?q="+value,

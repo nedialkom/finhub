@@ -67,3 +67,5 @@
 
 ## Functioning search which leads to company_detaisl page with info from API
 
+## News with option to choose time frame
+
