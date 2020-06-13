@@ -20,7 +20,7 @@
           </thead>
           <tbody>
           {%for company in companies%}
-            <tr data-href="{% url 'company_details' company.id%}">
+            <tr data-href="{% url 'company_details' company.id %}">
               <!--<th scope="row"><a href="#" class="stretched-link">{{company.id}}</a></th>-->
               <td>{{company.id}}</td>
               <td>{{company.description}}</td>

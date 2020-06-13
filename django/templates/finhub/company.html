@@ -1,6 +1,31 @@
 {% extends 'finhub/base.html' %}
 {% load static %}
 {% load timetags %}
+
+{% block custom_css %}
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+  max-width: 100%;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<script>
+var url_candle = "{{ url_candle }}";
+</script>
+<!-- Chart code -->
+
+
+
+{% endblock custom_css %}
+
 {% block content %}
     <div class="container-fluid">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -34,6 +59,32 @@
           </tbody>
         </table>
       </div>
+
+    <div id="controls" style="width: 100%; overflow: hidden;">
+        <div style="float: left; margin-left: 15px;">
+            From: <input type="text" id="fromfield" class="amcharts-input" value={{bday}}/>
+            To: <input type="text" id="tofield" class="amcharts-input" value={{eday}}/>
+        </div>
+        <div style="float: right; margin-right: 15px;">
+            <button id="b1m" class="amcharts-input">1m</button>
+            <button id="b3m" class="amcharts-input">3m</button>
+            <button id="b6m" class="amcharts-input">6m</button>
+            <button id="b1y" class="amcharts-input">1y</button>
+            <button id="bytd" class="amcharts-input">YTD</button>
+            <button id="bmax" class="amcharts-input">MAX</button>
+        </div>
+    </div>
+    <div id="chartdiv"></div>
+
+
+
+
+
+
+
+
+
+
     <div class="row align-items-start">
         <div class="col-auto">
             <h3>News for the period</h3>
@@ -115,4 +166,5 @@
                 });
             });
         </script>
+        <script src="{% static 'finhub/candlestick.js'%}"></script>
 {% endblock custom_js %}

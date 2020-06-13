@@ -100,10 +100,11 @@ def company_details(request, id):
     url = END_POINT + '/company-news?symbol=' + company.symbol + '&from=' + from_date + '&to=' + to_date + "&token=" + API_KEY
     url_to_template = END_POINT + '/company-news?symbol=' + company.symbol + "&token=" + API_KEY
     r2 = requests.get(url)
-
+    url_candle = END_POINT + '/stock/candle?symbol=' + company.symbol + "&token=" + API_KEY
     return render(request, 'finhub/company.html', {'company':company,
                                                    'response':r.json(),
                                                    'news':r2.json(),
                                                    'eday':to_date,
                                                    'bday':from_date,
-                                                   'url':url_to_template})
+                                                   'url':url_to_template,
+                                                   'url_candle':url_candle,})

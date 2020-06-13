@@ -69,3 +69,5 @@
 
 ## News with option to choose time frame
 
+## Working search and company details with candle for stocks.
+* Consider deleting dashboard.js in static and relevant lines in base.html and finhub.html;
